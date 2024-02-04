@@ -26,23 +26,21 @@ mod hello_anchor {
     }
 
     pub fn new_turn(ctx: Context<NewTurn>) -> Result<()> {
-
         let directions: [(i8, i8); 8] = [
             (-1, -1), // above left
-            (-1, 0), // above
-            (-1, 1), // above right
-            (0, 1), // right
-            (1, 1), // below right
-            (1, 0), // below
-            (1, -1), // below left
-            (0, -1), // left
+            (-1, 0),  // above
+            (-1, 1),  // above right
+            (0, 1),   // right
+            (1, 1),   // below right
+            (1, 0),   // below
+            (1, -1),  // below left
+            (0, -1),  // left
         ];
 
-        let new_grid = grid.grid.clone();
+        let mut new_grid = ctx.accounts.grid.grid.clone();
 
         for r in 0..6 {
             for c in 0..6 {
-
                 let mut neighbors: u8 = 0;
 
                 for (x, y) in directions {
@@ -59,19 +57,21 @@ mod hello_anchor {
                 let r = r as usize;
                 let c = c as usize;
 
-                msg!("Neighbors: {}!", neighbors);                
+                msg!("Neighbors: {}!", neighbors);
 
                 if neighbors < 2 {
-                    ctx.accounts.grid.grid[r][c] = false;
+                    new_grid[r][c] = false;
                 }
                 if neighbors > 3 && ctx.accounts.grid.grid[r][c] == true {
-                    ctx.accounts.grid.grid[r][c] = false;
+                    new_grid[r][c] = false;
                 }
                 if neighbors == 3 && ctx.accounts.grid.grid[r][c] == false {
-                    ctx.accounts.grid.grid[r][c] = true;
+                    new_grid[r][c] = true;
                 }
             }
         }
+
+        ctx.accounts.grid.grid = new_grid.clone();
 
         msg!("New grid: {:?}!", ctx.accounts.grid.grid);
         Ok(())
@@ -135,7 +135,7 @@ pub struct ResetGrid<'info> {
     )]
     pub grid: Account<'info, Grid>,
     pub signer: Signer<'info>,
-    pub system_program: Program<'info, System>
+    pub system_program: Program<'info, System>,
 }
 
 #[account]
