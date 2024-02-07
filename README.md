@@ -1,2 +1,2 @@
 # solana_programs
-A repo to store random solana programs
+A repo to store solana programs built with Seahorse 
