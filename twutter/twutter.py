@@ -40,19 +40,19 @@ def create_new_user_account(
   
   print(f'{owner.key()} created a new user account {account.key()} with user name of {account.user_name}')
   
+  
 @instruction
 def create_new_tweet(
   owner: Signer,
   user: UserAccount,
   tweet: Empty[Tweet],
   text: str,
-  image: str
+  image: str,
+  tweet_id: u64
   ):
 
   assert user.owner == owner.key(), "Signer is not the user account owner"
-  
-  user.last_tweet_id += 1
-  tweet_id = user.last_tweet_id
+  assert tweet_id == user.last_tweet_id + 1, "Incorrect tweed ID"
 
   tweet = tweet.init(
     payer = owner,
@@ -60,6 +60,7 @@ def create_new_tweet(
     space = TWEET_SIZE
   )
   
+  user.last_tweet_id += 1
   tweet.owner = owner.key()
   tweet.text = text
   tweet.image = image
@@ -74,8 +75,8 @@ def create_new_tweet(
 @instruction
 def like_tweet(
   liker: Signer, 
-  user: UserAccount, 
   tweet: Tweet, 
+  tweets_user_account: UserAccount,
   like: Empty[Like]
   ):
   
