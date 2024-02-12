@@ -1,0 +1,59 @@
+
+from seahorse.prelude import *
+
+declare_id('')
+
+class UserProfile(Account):
+  owner: Pubkey
+  last_todo: u8
+  todo_count: u8
+
+class TodoAccount(Account):
+  owner: Pubkey
+  idx: u8
+  todo: str
+  done: bool
+
+
+@instruction
+def init_userprofile(owner: Signer, user_profile: Empty[UserProfile]):
+  user_profile = user_profile.init(
+    payer = owner,
+    seeds = ['user_profile',owner])
+  user_profile.owner = owner.key()
+  user_profile.last_todo = 0
+  user_profile.todo_count = 0
+
+
+@instruction
+def add_task(
+  owner: Signer,
+  user_profile: UserProfile,
+  todo_account: Empty[TodoAccount], 
+  todo: str
+  ):
+  
+  todo_account = todo_account.init(
+    payer = owner,
+    seeds = ['todo_account', owner, user_profile.last_todo]
+  )
+  
+  todo_account.todo = todo
+  todo_account.idx = user_profile.last_todo
+  todo_account.owner = owner.key()
+  user_profile.last_todo += 1
+  user_profile.todo_count += 1
+
+
+@instruction
+def mark_task(
+  owner: Signer, 
+  todo_index: u8, 
+  user_profile: UserProfile, 
+  todo_account: TodoAccount
+  ):
+  
+  todo_account.done=True
+  
+  print(todo_account.done)
+

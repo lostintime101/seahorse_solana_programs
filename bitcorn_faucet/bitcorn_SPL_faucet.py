@@ -1,7 +1,7 @@
 from seahorse.prelude import *
 from seahorse.pyth import *
 
-declare_id('fMX8bmgPgmcanxQJPJYgqoXAk4HExMAQ4uGexpLQZVN')
+declare_id('')
 
 class BitcornFaucet(Account):
   bump: u8
