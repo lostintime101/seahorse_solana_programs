@@ -3,7 +3,7 @@ from seahorse.prelude import *
 declare_id('HHQoyeYQFsgy2Uqv75Qm26m67Aoh3bVTbhpav1xtm6iD')
 
 class GameState(Enum):
-  Game = 0
+  InProgress = 0
   Player1Wins = 1
   Player2Wins = 2
   Draw = 3
@@ -47,7 +47,7 @@ def win_check(grid: Array[u8,9], player: u8)-> GameState:
   # check for full board i.e. draw
   for i in range(9):
     if grid[i] == 0:
-        return GameState.Game
+        return GameState.InProgress
 
   return GameState.Draw
 
@@ -81,7 +81,7 @@ def play_game(player:Signer, game_data:Game, played_by:u8, move_position:u8):
   else:
     game_data.curr_player = 2
 
-  if(game_status == GameState.Game):
+  if(game_status == GameState.InProgress):
     print("Ready for next move")
    
   if(game_status == GameState.Player1Wins):
