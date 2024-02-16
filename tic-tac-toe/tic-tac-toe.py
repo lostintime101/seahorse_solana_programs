@@ -1,6 +1,6 @@
 from seahorse.prelude import *
 
-declare_id('HHQoyeYQFsgy2Uqv75Qm26m67Aoh3bVTbhpav1xtm6iD')
+declare_id('')
 
 class GameState(Enum):
   InProgress = 0
@@ -9,8 +9,8 @@ class GameState(Enum):
   Draw = 3
 
 class Game(Account):
-  players: Array[Pubkey,2]
-  grid: Array[u8,9]
+  players: Array[Pubkey, 2]
+  grid: Array[u8, 9]
   game_status: u8
   curr_player: u8
 
@@ -27,7 +27,7 @@ def init_game(owner: Signer, player1: Pubkey, player2: Pubkey, game: Empty[Game]
   game.curr_player = 1
 
 
-def win_check(grid: Array[u8,9], player: u8)-> GameState:
+def win_check(grid: Array[u8, 9], player: u8)-> GameState:
 
   # check for 8 possible win conditions
   if((grid[0] == player and grid[1] == player and grid[2] == player) or
@@ -53,13 +53,13 @@ def win_check(grid: Array[u8,9], player: u8)-> GameState:
 
 
 @instruction
-def play_game(player:Signer, game_data:Game, played_by:u8, move_position:u8):
+def play_game(player: Signer, game_data: Game, played_by: u8, move_position: u8):
    
   # check the game is active
   assert game_data.game_status == 0, 'This game is already finished'
 
   # check for valid signer
-  assert game_data.players[played_by-1] == player.key(), 'Invalid Signer'
+  assert game_data.players[played_by -1] == player.key(), 'Invalid Signer'
    
   # check the correct player is taking their turn
   assert played_by == game_data.curr_player, 'Invalid Player'
