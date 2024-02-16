@@ -43,8 +43,8 @@ describe("TTT game", async () => {
     await pg.connection.confirmTransaction(tx);
     console.log("Turn 1 signature", tx);
 
-    const game_account = await pg.program.account.game.fetch(game);
-    printgame(game_account.grid);
+    const gameAccount = await pg.program.account.game.fetch(game);
+    printgame(gameAccount.grid);
   });
 
   it("Turn 2", async () => {
@@ -62,7 +62,7 @@ describe("TTT game", async () => {
     await pg.connection.confirmTransaction(tx);
     console.log("Turn 2 signature", tx);
 
-    const game_account = await pg.program.account.game.fetch(game);
-    printgame(game_account.grid);
+    const gameAccount = await pg.program.account.game.fetch(game);
+    printgame(gameAccount.grid);
   });
 });
