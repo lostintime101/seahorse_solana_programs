@@ -6,7 +6,6 @@ declare_id('')
 class UserProfile(Account):
   owner: Pubkey
   last_todo: u8
-  todo_count: u8
 
 class TodoAccount(Account):
   owner: Pubkey
@@ -24,7 +23,6 @@ def init_user_profile(owner: Signer, user_profile: Empty[UserProfile]):
   
   user_profile.owner = owner.key()
   user_profile.last_todo = 0
-  user_profile.todo_count = 0
 
 
 @instruction
@@ -44,7 +42,6 @@ def add_task(
   todo_account.index = user_profile.last_todo
   todo_account.owner = owner.key()
   user_profile.last_todo += 1
-  user_profile.todo_count += 1
 
 
 @instruction
