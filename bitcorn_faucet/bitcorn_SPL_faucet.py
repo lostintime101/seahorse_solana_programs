@@ -54,12 +54,10 @@ def drip_bitcorn_tokens(
   
   btc_price_feed = bitcoin_price_account.validate_price_feed('devnet-BTC/USD')
   btc_price = u64(btc_price_feed.get_price().price)
-  btc_price = btc_price // 100_000_000  # converts to dollar units i.e. 4313965499999 -> 43,139
   
   print("The Bitcorn price is ", btc_price)
   
-  thousand_bucks = 1000 * 1_000_000_000
-  drip_amount = u64(thousand_bucks // btc_price)
+  drip_amount = u64(btc_price)
   
   bump = faucet.bump
 
