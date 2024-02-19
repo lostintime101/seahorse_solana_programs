@@ -57,14 +57,12 @@ def drip_bitcorn_tokens(
   
   print("The Bitcorn price is ", btc_price)
   
-  drip_amount = u64(btc_price)
-  
   bump = faucet.bump
 
   faucet_account.transfer(
     authority = faucet,
     to = user_account,
-    amount = u64(drip_amount),
+    amount = u64(btc_price),
     signer = ['mint', mint, bump]
   )
 
