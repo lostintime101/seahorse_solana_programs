@@ -2,15 +2,15 @@
 
 describe("Todo App", async () => {
   const task: string = "ship product";
-  const last_todo: anchor.BN = new anchor.BN(0);
-  const lastTodoBuffer: Buffer = last_todo.toArrayLike(Buffer, "le", 1);
+  const lastTodo: anchor.BN = new anchor.BN(0);
+  const lastTodoBuffer: Buffer = lastTodo.toArrayLike(Buffer, "le", 1);
 
-  const [userProfile] = await web3.PublicKey.findProgramAddressSync(
+  const [userProfile] = web3.PublicKey.findProgramAddressSync(
     [Buffer.from("user_profile"), pg.wallet.publicKey.toBuffer()],
     pg.PROGRAM_ID
   );
 
-  const [todoAccount] = await web3.PublicKey.findProgramAddressSync(
+  const [todoAccount] = web3.PublicKey.findProgramAddressSync(
     [
       Buffer.from("todo_account"),
       pg.wallet.publicKey.toBuffer(),
@@ -25,8 +25,7 @@ describe("Todo App", async () => {
       .initUserProfile()
       .accounts({
         owner: pg.wallet.publicKey,
-        userProfile: userProfile,
-        systemProgram: web3.SystemProgram.programId,
+        userProfile: userProfile
       })
       .rpc();
 
@@ -42,8 +41,7 @@ describe("Todo App", async () => {
       .accounts({
         owner: pg.wallet.publicKey,
         userProfile: userProfile,
-        todoAccount: todoAccount,
-        systemProgram: web3.SystemProgram.programId,
+        todoAccount: todoAccount
       })
       .rpc();
 
