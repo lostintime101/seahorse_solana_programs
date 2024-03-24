@@ -11,3 +11,5 @@ A selection of example Solana programs built with Seahorse.
 8. Bitcorn faucet: an SPL token faucet
 9. Twutter: A Twitter like social feed
 10. Conway's Game of Life: Anchor only for now
+
+Feel free to make a pull request to add your Seahorse program to this repo.
