@@ -21,6 +21,6 @@ def do_fizzbuzz(fizzbuzz: FizzBuzz, n: u64):
   fizzbuzz.fizz = n % 3 == 0
   fizzbuzz.buzz = n % 5 == 0
     
-  if not fizzbuzz.fizz and not fizzbuzz.fuzz:
+  if not fizzbuzz.fizz and not fizzbuzz.buzz:
     fizzbuzz.n = n
 
